@@ -9,17 +9,16 @@ import javax.persistence.Id;
 @Entity
 public class Campus {
 
-
-
     @Id
     @GeneratedValue
         private Long id;
         private String location;
         
+        
 
 
     public Long getId() {
-        return null;
+        return id;
     }
     
     public Collection<Book>getBooks() {
@@ -28,7 +27,7 @@ public class Campus {
 
     public Campus(){
     }
-    
+
     public Campus(String location) {
         this.location = location;
     }
