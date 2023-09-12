@@ -1,9 +1,12 @@
 package com.example.library_demo;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest 
@@ -33,7 +36,14 @@ public class JPAWiringTest {
         authorRepo.save(testAuthor1);
         bookRepo.save(testBook);
 
-        
+        entityManager.flush();
+        entityManager.clear();
 
+        Optional<Campus> retrievedCampusOpt = campusRepo.findById(testCampus.getId());
+        Campus retrievedCampus = retrievedCampusOpt.get();
+        Book retrievedBook = bookRepo.findById(testBook.getId()).get();
+        assertThat(retrievedCampus.getBooks()).contains(testBook);
+ 
+ 
     }
 }
