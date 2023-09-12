@@ -1,17 +1,16 @@
 package com.example.library_demo;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-@DataJpaTest 
+@DataJpaTest
 public class JPAWiringTest {
-    
 
     @Autowired
     private TestEntityManager entityManager;
@@ -25,13 +24,14 @@ public class JPAWiringTest {
     @Autowired
     private BookRepository bookRepo;
 
-
     @Test
-    public void campusShouldHaveAListOfBook(){
+    public void campusShouldHaveAListOfBooks() {
         Campus testCampus = new Campus("Test Location");
         Author testAuthor1 = new Author("Test firstName", "Test lastName");
-        Book   testBook = new Book("Title" ,"Description", testCampus, testAuthor1);
-   
+        Book testBook = new Book("Title", "Description", testCampus, testAuthor1);
+        Book testBook2 = new Book("Title", "Description", testCampus, testAuthor1);
+
+        
         campusRepo.save(testCampus);
         authorRepo.save(testAuthor1);
         bookRepo.save(testBook);
@@ -41,9 +41,8 @@ public class JPAWiringTest {
 
         Optional<Campus> retrievedCampusOpt = campusRepo.findById(testCampus.getId());
         Campus retrievedCampus = retrievedCampusOpt.get();
-        Book retrievedBook = bookRepo.findById(testBook.getId()).get();
-        assertThat(retrievedCampus.getBooks()).contains(testBook);
- 
- 
+        // Book retrievedBook = bookRepo.findById(testBook.getId()).get();
+        assertThat(retrievedCampus.getBooks()).contains(testBook2);
+
     }
 }
